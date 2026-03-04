@@ -11,13 +11,15 @@ class TestReviewEndpoints(unittest.TestCase):
 
         r_owner = self.client.post('/api/v1/users/', json={
             "first_name": "Alice", "last_name": "Smith",
-            "email": "alice@example.com"
+            "email": "alice@example.com",
+            "password": "alice123"
         })
         self.owner_id = r_owner.get_json()['id']
 
         r_user = self.client.post('/api/v1/users/', json={
             "first_name": "Bob", "last_name": "Jones",
-            "email": "bob@example.com"
+            "email": "bob@example.com",
+            "password": "bob123"
         })
         self.user_id = r_user.get_json()['id']
 
@@ -118,7 +120,9 @@ class TestReviewEndpoints(unittest.TestCase):
                   "user_id": self.user_id, "place_id": self.place_id}
         )
         self.assertEqual(response.status_code, 200)
-        self.assertIn('message', response.get_json())
+        data = response.get_json()
+        self.assertEqual(data["text"], "Amazing!")
+        self.assertEqual(data["rating"], 4)
 
     def test_update_review_not_found(self):
         response = self.client.put(
