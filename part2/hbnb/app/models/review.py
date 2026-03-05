@@ -14,7 +14,7 @@ class Review(BaseModel):
         place (Place): Place being reviewed.
     """
 
-    def __init__(self, rating, text, user, place):
+    def __init__(self, text, rating, user, place):
         """
         Initialize a Review instance.
 
@@ -37,8 +37,10 @@ class Review(BaseModel):
         if place is None:
             raise ValueError("place is required")
 
-        self.rating = int(rating)
+        if not text or text.strip() == "":
+            raise ValueError("text is required")
         self.text = text
+        self.rating = int(rating)
         self.user = user
         self.place = place
 
