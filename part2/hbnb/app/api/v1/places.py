@@ -136,16 +136,7 @@ class PlaceResource(Resource):
         except ValueError as e:
             return {'error': str(e)}, 400
 
-        return {
-            'id': place.id,
-            'title': place.title,
-            'description': place.description,
-            'price': place.price,
-            'latitude': place.latitude,
-            'longitude': place.longitude,
-            'owner_id': place.owner.id,
-            'amenities': [{'id': a.id, 'name': a.name} for a in place.amenities]
-        }, 200
+        return {'message': 'Place updated successfully'}, 200
 
 @api.route('/<place_id>/reviews')
 class PlaceReviewList(Resource):
