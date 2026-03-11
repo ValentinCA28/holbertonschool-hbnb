@@ -3,10 +3,17 @@ User API module.
 
 This module defines the RESTful endpoints for managing User objects
 in the Hbnb application. The PUT endpoint is protected by JWT authentication.
+
+Access rules:
+- POST /     : Admin only (create user)
+- GET /      : Public
+- GET /<id>  : Public
+- PUT /<id>  : Authenticated user (own data only, no email/password)
+               OR Admin (any user, email and password allowed)
 """
 
 from flask_restx import Namespace, Resource, fields
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from app.services import facade
 
 api = Namespace('users', description='User operations')
@@ -60,10 +67,11 @@ class UserList(Resource):
     """
     Resource for creating and retrieving users.
     """
-
+    @jwt_required()
     @api.expect(user_model, validate=True)
     @api.response(201, 'User successfully created')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Admin privileges required')
     @api.response(422, 'Email already registered')
     def post(self):
         """
@@ -79,6 +87,10 @@ class UserList(Resource):
             HTTP 400 if validation fails.
             HTTP 422 if email already exists.
         """
+        claims = get_jwt()
+        if not claims.get('is_admin'):
+            return {'error': 'Admin privileges required'}, 403
+
         user_data = api.payload
 
         try:
@@ -142,7 +154,6 @@ class UserResource(Resource):
             HTTP 404 if user does not exist.
         """
         user = facade.get_user(user_id)
-
         if not user:
             return {'error': 'User not found'}, 404
 
@@ -161,26 +172,48 @@ class UserResource(Resource):
     @api.response(404, 'User not found')
     def put(self, user_id):
         """
-        Update user details. Only the user can modifiy their own data.
-        Email and password cannot be changed through this endpoint."""
-        current_user = get_jwt_identity()
-
-        # only the authenticated user can modify their own data
-        if user_id != current_user:
-            return {'error': 'Unauthorized action'}, 403
+        Update user details.
+        - Regular user : Can only modifiy their own first_name / last_name.
+        Email and passwird are blocked.
+        - Admin: can modify any user including email and password.
+        Email must remain unique.
+        """
+        current_user_id = get_jwt_identity()
+        claims = get_jwt()
+        is_admin = claims.get('is_admin', False)
 
         data = api.payload
 
-        #Block email and password modification
-        if 'email' in data or 'password' in data:
-            return {'error': 'You cannot modify email or password'}, 400
+        if is_admin:
+            # Admin can modify any user including email and password
+            email = data.get('email')
+            if email:
+                existing = facade.get_user_by_email(email)
+                if existing and existing.id != user_id:
+                    return {'error': 'Email already in use'}, 400
 
-        try:
-            user = facade.update_user(user_id, data)
-            if not user:
-                return {'error': 'User not found'}, 404
-        except ValueError as e:
-            return {'error': str(e)}, 400
+            try:
+                user = facade.update_user(user_id, data)
+                if not user:
+                    return {'error': 'User not found'}, 404
+            except ValueError as e:
+                return {'error': str(e)}, 400
+
+        else:
+            # Regular user : can only modifiy their own data
+            if user_id != current_user_id:
+                return {'error': 'Unauthorized action'}, 403
+
+            #Email and password are forbidden
+            if 'email' in data or 'password' in data:
+                return {'error': 'You cannot modify email or password'}, 400
+
+            try:
+                user = facade.update_user(user_id, data)
+                if not user:
+                    return {'error': 'User not found'}, 404
+            except ValueError as e:
+                return {'error': str(e)}, 400
 
         return {
             'id': user.id,
