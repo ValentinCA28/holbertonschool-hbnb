@@ -4,10 +4,16 @@ Place API module.
 This module defines the RESTful endpoints for managing Place objects
 in the HBnB application. It provides CRUD operations (excluding DELETE)
 and integrates with the business logic layer via the HBnBFacade.
+
+Acces rules:
+- POST /    : Authenticated (owner_id = current user)
+- GET /     : Public
+- GET /<id> : Public
+- GET /<id> : Owner OR Admin
 """
 
 from flask_restx import Namespace, Resource, fields
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from app.services import facade
 
 api = Namespace('places', description='Place operations')
@@ -38,7 +44,7 @@ place_model = api.model('Place', {
     'price': fields.Float(required=True, description='Price per night'),
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
-    'owner_id': fields.String(required=True, description='ID of the owner'),
+    'owner_id': fields.String(description='Ignored - set automatically from JWT token'),
     'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
 })
 
@@ -135,18 +141,21 @@ class PlaceResource(Resource):
     @jwt_required()
     @api.expect(place_update_model, validate=True)
     @api.response(200, 'Place updated successfully')
+    @api.response(403, 'Unauthorized action')
     @api.response(404, 'Place not found')
     @api.response(400, 'Invalid input data')
     def put(self, place_id):
         """Update a place's information. Only the owner can modify it."""
         current_user = get_jwt_identity()
+        claims = get_jwt()
+        is_admin = claims.get('is_admin', False)
 
         place = facade.get_place(place_id)
         if not place:
             return {'error': 'Place not found'}, 404
 
-        # Only the owner can update their place
-        if place.owner.id != current_user:
+        # Admin bypasses ownership check
+        if not is_admin and place.owner.id != current_user:
             return {'error': 'Unauthorized action'}, 403
 
         try:
