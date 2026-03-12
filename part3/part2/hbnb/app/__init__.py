@@ -8,9 +8,11 @@ for the HBnB project.
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from flask_sqlalchemy import SQLAlchemy
 
 bcrypt = Bcrypt()
 jwt = JWTManager()
+db =  SQLAlchemy()
 
 from app.api import api_bp
 
@@ -32,6 +34,7 @@ def create_app(config_class="config.DevelopmentConfig"):
 
     bcrypt.init_app(app)
     jwt.init_app(app)
+    db.init_app(app)
 
     from app.services import facade
     facade.reset()
