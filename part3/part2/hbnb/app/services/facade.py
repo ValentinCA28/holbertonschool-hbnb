@@ -1,5 +1,6 @@
 # app/services/facade.py
 
+from app.persistence.repositories.user_repository import UserRepository
 from app.persistence.repository import SQLAlchemyRepository
 from app.models.user import User
 from app.models.place import Place
@@ -17,7 +18,7 @@ class HBnBFacade:
 
     def __init__(self):
         """Initialize repositories for users, places, reviews, and amenities."""
-        self.user_repo = SQLAlchemyRepository(User)
+        self.user_repo = UserRepository(User)
         self.place_repo = SQLAlchemyRepository(Place)
         self.review_repo = SQLAlchemyRepository(Review)
         self.amenity_repo = SQLAlchemyRepository(Amenity)
@@ -49,6 +50,7 @@ class HBnBFacade:
             password=user_data["password"],
             is_admin=user_data.get("is_admin", False),
         )
+        user.hash_password(user_data['password'])  #bcrypt hash
 
         self.user_repo.add(user)
         return user
