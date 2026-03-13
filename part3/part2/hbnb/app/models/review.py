@@ -1,7 +1,7 @@
 # app/models/review.py
-
+from app import db
 from app.models.base_model import BaseModel
-
+from sqlalchemy.orm import validates
 
 class Review(BaseModel):
     """
@@ -14,40 +14,23 @@ class Review(BaseModel):
         place (Place): Place being reviewed.
     """
 
-    def __init__(self, text, rating, user, place):
-        """
-        Initialize a Review instance.
+    __tablename__ = 'reviews'
 
-        Args:
-            rating (int): Rating value (1–5).
-            text (str): Comment text.
-            user (User): Author of review.
-            place (Place): Reviewed place.
+    text = db.Column(db.text,  nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
 
-        Raises:
-            ValueError: If validation fails.
-        """
-        super().__init__()
+    #-----------------------
+    # SQLAlchemy Validators
+    #-----------------------
 
-        self._validate_rating(rating)
-
-        if user is None:
-            raise ValueError("user is required")
-
-        if place is None:
-            raise ValueError("place is required")
-
-        if not text or text.strip() == "":
+    @validates('text')
+    def validate_text(self, key, value):
+        if not value or value.strip() == '' :
             raise ValueError("text is required")
-        self.text = text
-        self.rating = int(rating)
-        self.user = user
-        self.place = place
+        return value
 
-        user.add_review(self)
-        place.add_review(self)
-
-    def _validate_rating(self, rating):
-        """Validate rating is between 1 and 5."""
-        if not (1 <= int(rating) <= 5):
+    @validates('rating')
+    def validate_rating(self, key, value):
+        if not (1 <= int(value) <= 5):
             raise ValueError("rating must be between 1 and 5")
+        return int(value)
