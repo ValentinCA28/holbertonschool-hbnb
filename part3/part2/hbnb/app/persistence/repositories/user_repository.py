@@ -6,7 +6,7 @@ Located in : app/persistance/repository/user_repository.py
 """
 
 from app.models.user import User
-from app.persistance.repository import SQLAlchemyRepository
+from app.persistence.repository import SQLAlchemyRepository
 
 
 class UserRepository(SQLAlchemyRepository):
