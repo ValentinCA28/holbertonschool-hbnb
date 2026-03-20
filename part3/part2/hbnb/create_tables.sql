@@ -15,9 +15,9 @@ CREATE TABLE IF NOT EXISTS places (
     id CHAR(36) PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    price DECIMAL(10, 2) NOT NULL,
-    latitude FLOAT NOT NULL,
-    longitude FLOAT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL CHECK(price > 0),
+    latitude FLOAT NOT NULL CHECK(latitude >= -90 AND latitude <= 90),
+    longitude FLOAT NOT NULL CHECK(longitude >= -180 AND longitude <= 180),
     owner_id CHAR(36) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -51,3 +51,28 @@ CREATE TABLE IF NOT EXISTS place_amenity (
     FOREIGN KEY (place_id) REFERENCES places(id),
     FOREIGN KEY (amenity_id) REFERENCES amenities(id)
 );
+
+-- =====================================================
+-- Initial data
+-- =====================================================
+
+INSERT INTO users (
+    id,
+    first_name,
+    last_name,
+    email,
+    password,
+    is_admin
+) VALUES (
+    '36c9050e-ddd3-4c3b-9731-9f487208bbc1',
+    'Admin',
+    'HBnB',
+    'admin@hbnb.io',
+    '$2b$12$Uu5fTvVL036i9kQnGeAeNOlb5JAvFCFMDKuHfcycD/fpzVtjx7dty',
+    TRUE
+);
+
+INSERT INTO amenities (id, name) VALUES
+('7c9fdf4d-99be-4b1c-8c2e-5aea5db0d0eb', 'WiFi'),
+('ae5ae8a5-0203-451b-9cb8-6086e5b2f41e', 'Swimming Pool'),
+('97bc1cc5-3dcd-439e-894f-e9986dedd012', 'Air Conditioning');
