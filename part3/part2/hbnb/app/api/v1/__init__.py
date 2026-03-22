@@ -40,8 +40,8 @@ api = Api(
     version="1.0",
     title="HBnB API",
     description="HBnB Application REST API (Version 1)",
-    doc="/"
-    authorizations=authorizations
+    doc="/",
+    authorizations=authorizations,
     security='Bearer'
 )
 
