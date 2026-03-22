@@ -240,7 +240,7 @@ class HBnBFacade:
 
         review = Review(
             rating=review_data["rating"],
-            text=review_data["rating"],
+            text=review_data["text"],
             user_id=review_data["user_id"],
             place_id=review_data["place_id"],
         )
