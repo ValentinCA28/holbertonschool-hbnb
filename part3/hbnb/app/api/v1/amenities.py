@@ -138,7 +138,7 @@ class AmenityResource(Resource):
         """
         claims = get_jwt()
         if not claims.get('is_admin'):
-            return {'error' : 'Admin privileges required'}, 40
+            return {'error' : 'Admin privileges required'}, 403
 
         amenity_data = api.payload
 
