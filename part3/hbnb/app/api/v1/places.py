@@ -165,27 +165,6 @@ class PlaceResource(Resource):
 
         return {'message': 'Place updated successfully'}, 200
 
-@api.route('/<place_id>/reviews')
-class PlaceReviewList(Resource):
-
-    @api.response(200, 'List of reviews for the place retrieved successfully')
-    @api.response(404, 'Place not found')
-    def get(self, place_id):
-        """Get all reviews for a specific place. Public endpoint."""
-        place = facade.get_place(place_id)
-        if not place:
-            return {'error': 'Place not found'}, 404
-
-        reviews = facade.get_reviews_by_place(place_id)
-
-        return [{
-            'id': review.id,
-            'text': review.text,
-            'rating': review.rating,
-            'user_id': review.user.id,
-            "place_id": review.place.id
-        } for review in reviews], 200
-
     @jwt_required()
     @api.response(200, 'Place deleted successfully')
     @api.response(403, 'Unauthorized action')
@@ -206,3 +185,24 @@ class PlaceReviewList(Resource):
 
         facade.delete_place(place_id)
         return {'message': 'Place deleted successfully'}, 200
+
+@api.route('/<place_id>/reviews')
+class PlaceReviewList(Resource):
+
+    @api.response(200, 'List of reviews for the place retrieved successfully')
+    @api.response(404, 'Place not found')
+    def get(self, place_id):
+        """Get all reviews for a specific place. Public endpoint."""
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+
+        reviews = facade.get_reviews_by_place(place_id)
+
+        return [{
+            'id': review.id,
+            'text': review.text,
+            'rating': review.rating,
+            'user_id': review.user.id,
+            "place_id": review.place.id
+        } for review in reviews], 200
