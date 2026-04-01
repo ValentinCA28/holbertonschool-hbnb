@@ -514,8 +514,8 @@ def test_crud_reviews():
     # TEST 5.9 — Reviews place inexistante
     r = get("/places/00000000-0000-0000-0000-000000000000/reviews")
     test("5.9 — GET reviews place inexistante -> 404",
-         r.status_code == 404,
-         f"status={r.status_code}")
+        r.status_code == 404,
+        f"status={r.status_code}")
 
     print("\n  -- UPDATE --")
 
@@ -525,8 +525,8 @@ def test_crud_reviews():
                 {"text": "Encore mieux que prevu !", "rating": 5},
                 token=state["jane_token"])
         test("5.10 — PUT /reviews/<id> par auteur -> 200",
-             r.status_code == 200,
-             f"status={r.status_code}")
+            r.status_code == 200,
+            f"status={r.status_code}")
 
     # TEST 5.11 — Modifier review d'un autre
     if state["review_id"] and state["john_token"]:
@@ -534,33 +534,33 @@ def test_crud_reviews():
                 {"text": "Hacked review", "rating": 1},
                 token=state["john_token"])
         test("5.11 — PUT /reviews/<id> par autre user -> 403",
-             r.status_code == 403,
-             f"status={r.status_code}")
+            r.status_code == 403,
+            f"status={r.status_code}")
 
     print("\n  -- DELETE --")
 
     # TEST 5.12 — Supprimer review inexistante
     r = delete("/reviews/00000000-0000-0000-0000-000000000000",
-               token=state["admin_token"])
+            token=state["admin_token"])
     test("5.12 — DELETE review inexistante -> 404",
-         r.status_code == 404,
-         f"status={r.status_code}")
+        r.status_code == 404,
+        f"status={r.status_code}")
 
     # TEST 5.13 — Supprimer review d'un autre (sans etre admin)
     if state["review_id"] and state["john_token"]:
         r = delete(f"/reviews/{state['review_id']}",
-                   token=state["john_token"])
+                token=state["john_token"])
         test("5.13 — DELETE review d'un autre -> 403",
-             r.status_code == 403,
-             f"status={r.status_code}")
+            r.status_code == 403,
+            f"status={r.status_code}")
 
     # TEST 5.14 — Supprimer sa propre review
     if state["review_id"] and state["jane_token"]:
         r = delete(f"/reviews/{state['review_id']}",
-                   token=state["jane_token"])
+                token=state["jane_token"])
         test("5.14 — DELETE review par auteur -> 200",
-             r.status_code == 200,
-             f"status={r.status_code}")
+            r.status_code == 200,
+            f"status={r.status_code}")
 
 
 # ============================================================
@@ -576,8 +576,8 @@ def test_rbac():
         "email": "newuser@test.com", "password": "password123"
     }, token=state["admin_token"])
     test("6.1 — Admin cree un user -> 201",
-         r.status_code == 201,
-         f"status={r.status_code}")
+        r.status_code == 201,
+        f"status={r.status_code}")
     new_user_id = r.json().get("id") if r.status_code == 201 else None
 
     # TEST 6.2 — User normal essaie de creer un user
@@ -586,8 +586,8 @@ def test_rbac():
         "email": "hack@test.com", "password": "password123"
     }, token=state["john_token"])
     test("6.2 — User normal cree un user -> 403",
-         r.status_code == 403,
-         f"status={r.status_code}")
+        r.status_code == 403,
+        f"status={r.status_code}")
 
     # TEST 6.3 — Admin modifie un user qui ne lui appartient pas
     if state["john_id"]:
@@ -595,24 +595,24 @@ def test_rbac():
                 {"first_name": "Admin Updated"},
                 token=state["admin_token"])
         test("6.3 — Admin modifie user d'un autre -> 200 (bypass)",
-             r.status_code == 200,
-             f"status={r.status_code}")
+            r.status_code == 200,
+            f"status={r.status_code}")
 
     # TEST 6.4 — User normal cree une amenity
     r = post("/amenities/",
-             {"name": "Unauthorized Amenity"},
-             token=state["john_token"])
+            {"name": "Unauthorized Amenity"},
+            token=state["john_token"])
     test("6.4 — User normal cree amenity -> 403",
-         r.status_code == 403,
-         f"status={r.status_code}")
+        r.status_code == 403,
+        f"status={r.status_code}")
 
     # TEST 6.5 — Admin cree une amenity
     r = post("/amenities/",
-             {"name": "Admin Amenity"},
-             token=state["admin_token"])
+            {"name": "Admin Amenity"},
+            token=state["admin_token"])
     test("6.5 — Admin cree une amenity -> 201",
-         r.status_code == 201,
-         f"status={r.status_code}")
+        r.status_code == 201,
+        f"status={r.status_code}")
     admin_amenity_id = r.json().get("id") if r.status_code == 201 else None
 
     # TEST 6.6 — Admin modifie place d'un autre
@@ -621,8 +621,8 @@ def test_rbac():
                 {"title": "Modified by Admin", "price": 200.00},
                 token=state["admin_token"])
         test("6.6 — Admin modifie place d'un autre -> 200 (bypass)",
-             r.status_code == 200,
-             f"status={r.status_code}")
+            r.status_code == 200,
+            f"status={r.status_code}")
 
     # TEST 6.7 — Admin modifie amenity
     if state["amenity_id"]:
@@ -630,8 +630,8 @@ def test_rbac():
                 {"name": "Admin Modified Amenity"},
                 token=state["admin_token"])
         test("6.7 — Admin modifie une amenity -> 200",
-             r.status_code == 200,
-             f"status={r.status_code}")
+            r.status_code == 200,
+            f"status={r.status_code}")
 
     # TEST 6.8 — Admin supprime review d'un autre
     # Creer une review de Jane pour tester
@@ -645,11 +645,11 @@ def test_rbac():
             review_id = r.json()["id"]
             r2 = delete(f"/reviews/{review_id}", token=state["admin_token"])
             test("6.8 — Admin supprime review d'un autre -> 200 (bypass)",
-                 r2.status_code == 200,
-                 f"status={r2.status_code}")
+                r2.status_code == 200,
+                f"status={r2.status_code}")
         else:
             test("6.8 — Admin supprime review d'un autre -> 200 (bypass)",
-                 False, "Impossible de creer la review de test")
+                False, "Impossible de creer la review de test")
 
 
 # ============================================================
@@ -665,11 +665,11 @@ def test_relations():
         data = r.json()
         owner = data.get("owner")
         test("7.1 — GET /places/<id> retourne owner imbrique",
-             r.status_code == 200
-             and owner is not None
-             and "first_name" in owner
-             and "email" in owner,
-             f"owner={owner}")
+            r.status_code == 200
+            and owner is not None
+            and "first_name" in owner
+            and "email" in owner,
+            f"owner={owner}")
 
     # TEST 7.2 — GET place retourne amenities imbriquees
     if state["place_id"]:
@@ -677,8 +677,8 @@ def test_relations():
         data = r.json()
         amenities = data.get("amenities", [])
         test("7.2 — GET /places/<id> retourne amenities",
-             r.status_code == 200 and isinstance(amenities, list),
-             f"amenities={amenities}")
+            r.status_code == 200 and isinstance(amenities, list),
+            f"amenities={amenities}")
 
     # TEST 7.3 — Reviews d'une place retournent user_id et place_id
     if state["place_id"] and state["jane_token"]:
@@ -693,22 +693,22 @@ def test_relations():
             r2 = get(f"/places/{state['place_id']}/reviews")
             reviews = r2.json()
             test("7.3 — GET /places/<id>/reviews retourne user_id et place_id",
-                 r2.status_code == 200
-                 and len(reviews) > 0
-                 and "user_id" in reviews[0]
-                 and "place_id" in reviews[0],
-                 f"reviews[0]={reviews[0] if reviews else 'vide'}")
+                r2.status_code == 200
+                and len(reviews) > 0
+                and "user_id" in reviews[0]
+                and "place_id" in reviews[0],
+                f"reviews[0]={reviews[0] if reviews else 'vide'}")
             # Nettoyer
             delete(f"/reviews/{review_id}", token=state["jane_token"])
         else:
             test("7.3 — GET /places/<id>/reviews retourne user_id et place_id",
-                 False, "Impossible de creer review de test")
+                False, "Impossible de creer review de test")
 
     # TEST 7.4 — Reviews place inexistante
     r = get("/places/00000000-0000-0000-0000-000000000000/reviews")
     test("7.4 — GET /places/inexistant/reviews -> 404",
-         r.status_code == 404,
-         f"status={r.status_code}")
+        r.status_code == 404,
+        f"status={r.status_code}")
 
     # TEST 7.5 — owner_id de la place = ID du user connecte
     if state["place_id"] and state["john_id"]:
@@ -719,6 +719,103 @@ def test_relations():
              owner_id == state["john_id"],
              f"owner_id={owner_id}, john_id={state['john_id']}")
 
+    def test_delete_endpoints():
+        section("SECTION 8 — DELETE : Users, Places, Amenities")
+
+    # 8.1 — Non-admin ne peut pas supprimer un user
+    if state["john_id"] and state["john_token"]:
+        r = delete(f"/users/{state['john_id']}", token=state["john_token"])
+        test("8.1 — User normal supprime user -> 403",
+             r.status_code == 403, f"status={r.status_code}")
+
+    # 8.2 — Admin ne peut pas se supprimer lui-même
+    # (récupérer l'admin_id via GET /users/)
+    r = get("/users/", token=state["admin_token"])
+    admin_id = None
+    if r.status_code == 200:
+        for u in r.json():
+            if u["email"] == ADMIN_EMAIL:
+                admin_id = u["id"]
+                break
+    if admin_id:
+        r = delete(f"/users/{admin_id}", token=state["admin_token"])
+        test("8.2 — Admin se supprime lui-même -> 400",
+             r.status_code == 400, f"status={r.status_code}")
+
+    # 8.3 — Admin supprime user inexistant -> 404
+    r = delete("/users/00000000-0000-0000-0000-000000000000",
+               token=state["admin_token"])
+    test("8.3 — DELETE user inexistant -> 404",
+         r.status_code == 404, f"status={r.status_code}")
+
+    # 8.4 — Non-propriétaire ne peut pas supprimer une place
+    if state["place_id"] and state["jane_token"]:
+        r = delete(f"/places/{state['place_id']}", token=state["jane_token"])
+        test("8.4 — Non-propriétaire supprime place -> 403",
+             r.status_code == 403, f"status={r.status_code}")
+
+    # 8.5 — Supprimer place inexistante -> 404
+    r = delete("/places/00000000-0000-0000-0000-000000000000",
+               token=state["admin_token"])
+    test("8.5 — DELETE place inexistante -> 404",
+         r.status_code == 404, f"status={r.status_code}")
+
+    # 8.6 — Non-admin ne peut pas supprimer une amenity
+    if state["amenity_id"] and state["john_token"]:
+        r = delete(f"/amenities/{state['amenity_id']}", token=state["john_token"])
+        test("8.6 — User normal supprime amenity -> 403",
+             r.status_code == 403, f"status={r.status_code}")
+
+    # 8.7 — Supprimer amenity inexistante -> 404
+    r = delete("/amenities/00000000-0000-0000-0000-000000000000",
+               token=state["admin_token"])
+    test("8.7 — DELETE amenity inexistante -> 404",
+         r.status_code == 404, f"status={r.status_code}")
+
+    # 8.8 — Admin supprime une amenity -> 200
+    # Créer une amenity temporaire pour le test
+    r = post("/amenities/", {"name": "Temp Delete Test"},
+             token=state["admin_token"])
+    if r.status_code == 201:
+        temp_amenity_id = r.json()["id"]
+        r = delete(f"/amenities/{temp_amenity_id}", token=state["admin_token"])
+        test("8.8 — Admin supprime amenity -> 200",
+             r.status_code == 200, f"status={r.status_code}")
+
+    # 8.9 — Owner supprime sa place -> 200 (et vérifie la cascade reviews)
+    # Créer une place temporaire et une review pour tester la cascade
+    if state["john_token"] and state["jane_token"]:
+        r = post("/places/", {
+            "title": "Temp Place", "description": "for delete test",
+            "price": 50.0, "latitude": 45.0, "longitude": 5.0, "amenities": []
+        }, token=state["john_token"])
+        if r.status_code == 201:
+            temp_place_id = r.json()["id"]
+            # Jane crée une review sur cette place temporaire
+            r_review = post("/reviews/", {
+                "text": "Review cascade test", "rating": 3,
+                "place_id": temp_place_id
+            }, token=state["jane_token"])
+            # John supprime sa place (cascade doit supprimer la review)
+            r = delete(f"/places/{temp_place_id}", token=state["john_token"])
+            test("8.9 — Owner supprime sa place -> 200",
+                 r.status_code == 200, f"status={r.status_code}")
+            # Vérifier que la place n'existe plus
+            r_check = get(f"/places/{temp_place_id}")
+            test("8.10 — Place supprimée bien absente -> 404",
+                 r_check.status_code == 404, f"status={r_check.status_code}")
+
+    # 8.11 — Admin supprime un user -> 200 (et cascade ses places/reviews)
+    # Créer un user temporaire
+    r = post("/users/", {
+        "first_name": "Temp", "last_name": "User",
+        "email": "tempdelete@test.com", "password": "password123"
+    }, token=state["admin_token"])
+    if r.status_code == 201:
+        temp_user_id = r.json()["id"]
+        r = delete(f"/users/{temp_user_id}", token=state["admin_token"])
+        test("8.11 — Admin supprime user -> 200",
+             r.status_code == 200, f"status={r.status_code}")
 
 # ============================================================
 # MAIN
