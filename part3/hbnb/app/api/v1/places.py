@@ -185,3 +185,24 @@ class PlaceReviewList(Resource):
             'user_id': review.user.id,
             "place_id": review.place.id
         } for review in reviews], 200
+
+    @jwt_required()
+    @api.response(200, 'Place deleted successfully')
+    @api.response(403, 'Unauthorized action')
+    @api.response(404, 'Place not found')
+    def delete(self, place_id):
+        """Delete a place. Only the owner can delete it."""
+        current_user = get_jwt_identity()
+        claims = get_jwt()
+        is_admin = claims.get('is_admin', False)
+
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+
+        # Admin bypasses ownership check
+        if not is_admin and place.owner.id != current_user:
+            return {'error': 'Unauthorized action'}, 403
+
+        facade.delete_place(place_id)
+        return {'message': 'Place deleted successfully'}, 200
