@@ -221,3 +221,29 @@ class UserResource(Resource):
             'last_name': user.last_name,
             'email': user.email
         }, 200
+
+@api.route('/<user_id>')
+class UserResource(Resource):
+
+    @jwt_required()
+    @api.response(200, 'User successfully deleted')
+    @api.response(400, 'Cannot delete your own account')
+    @api.response(403, 'Admin privileges required')
+    @api.response(404, 'User not found')
+    def delete(self, user_id):
+        """Delete a user. Admin only. Cannot delete yourself."""
+        claims = get_jwt()
+        if not claims.get('is_admin'):
+            return {'error': 'Admin privileges required'}, 403
+
+        current_user_id = get_jwt_identity()
+        if user_id == current_user_id:
+            return {'error': 'Cannot delete your own admin account'}, 400
+
+        user = facade.get_user(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+
+        facade.delete_user(user_id)
+        return {'message': 'User successfully deleted'}, 200
+
