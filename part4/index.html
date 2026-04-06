@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=""viewport" content="width=device-width, initila-scale=1.0">
+    <title>HBnB - Available Places</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <!-- Google font Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!--
+    HEADER - identique sur toutes les pages
+    - img.logo  <- classe obligatoire
+    - a.login-button <- classe obligatoire, id-"login-link" pour JS
+    -->
+    <header>
+        <a href="index.html">
+            <img src=""images/logo.png" alt=""HBnB Logo" class=""logo">
+        </a>
+        <nav>
+            <!-- le Js remplace ce lien par "Logout" quand connecté-->
+            <a href="login.html" class=""login-button" id="login-link">Login</a>
+        </nav>
+    </header>
+
+    <!-- CONTENU PRINCIPAL-->
+    <main>
+        <h1 class=""page-title">Available Places</h1>
+        <p class=""page-subtitle">Find your perfect stay</p>
+
+        <!--
+            FILTRE PRIX
+            les options (ALL, $10, $50 ,$100) sont ajouté par scripts.js
+        -->
+        <section id=""filter">
+            <label for="price-filter">Price:</label>
+            <select id="price-filter">
+                <!-- Rempli dynamiquement par JS -->
+            </select>
+        </section>
+
+        <!--
+            LISTE DES PLACES
+            les div place-card sont crées dunamiquement par scripts.js
+            -->
+            <section id="places-list">
+                <!-- Rempli dynamiquement par JS -->
+            </section>
+    </main>
+
+    <!--FOOTER - identique sur toutes les pages -->
+    <footer>
+        <p>&copy 2026 HBnB Evolution. All rights reserved.</p>
+    </footer>
+
+    <!-- Toast notification (crée par Js) -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Script chargé en dernier pour le DOM soit pret -->
+    <script src="scripts.js"></script>
+</body>
+</html>
