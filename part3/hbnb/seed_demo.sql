@@ -106,6 +106,37 @@ VALUES (
     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 );
 
+
+INSERT OR IGNORE INTO places (id, title, description, price, latitude, longitude, owner_id, created_at, updated_at)
+VALUES (
+    'place007-0000-0000-0000-000000000007',
+    'Mini studio budget',
+    'Petit studio simple mais propre, idéal pour backpackers.',
+    8.00, 46.2100, 6.1500,
+    'aaaa1111-0000-0000-0000-000000000001',
+    CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+);
+
+INSERT OR IGNORE INTO places (id, title, description, price, latitude, longitude, owner_id, created_at, updated_at)
+VALUES (
+    'place008-0000-0000-0000-000000000008',
+    'Chambre étudiante',
+    'Chambre simple dans une colocation calme, proche des transports.',
+    25.00, 46.2050, 6.1400,
+    'bbbb2222-0000-0000-0000-000000000002',
+    CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+);
+
+INSERT OR IGNORE INTO places (id, title, description, price, latitude, longitude, owner_id, created_at, updated_at)
+VALUES (
+    'place009-0000-0000-0000-000000000009',
+    'Studio compact',
+    'Studio moderne mais très petit, parfait pour courts séjours.',
+    45.00, 45.7600, 4.8350,
+    'cccc3333-0000-0000-0000-000000000003',
+    CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+);
+
 -- =============================================================
 -- AMENITIES LIÉES AUX PLACES
 -- =============================================================
