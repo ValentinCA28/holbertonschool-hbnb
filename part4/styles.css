@@ -1,0 +1,545 @@
+/*
+  styles.css — HBnB Part 4
+  Design : warm, modern, airbnb-inspired
+  Palette : orange #F7A92D, dark #1a1a2e, light grays
+  Font : Nunito via Google Fonts
+*/
+
+:root {
+    --orange:        #F7A92D;
+    --orange-dark:   #e09318;
+    --orange-light:  #FFF3DC;
+    --dark:          #1a1a2e;
+    --dark-mid:      #2d2d44;
+    --white:         #FAFAFA;
+    --gray-light:    #f0f0f5;
+    --gray-mid:      #d0d0e0;
+    --gray-text:     #666680;
+    --card-shadow:   0 4px 20px rgba(26, 26, 46, 0.10);
+    --card-hover:    0 8px 32px rgba(247, 169, 45, 0.20);
+    --radius:        16px;
+    --radius-sm:     10px;
+    --radius-btn:    10px;
+    --transition:    0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    background-color: var(--gray-light);
+    color: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ===== HEADER ===== */
+header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 100%);
+    padding: 0 40px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+/* Logo — classe obligatoire */
+.logo {
+    height: 40px;
+    width: auto;
+    transition: transform var(--transition);
+}
+.logo:hover { transform: scale(1.05); }
+
+header nav { display: flex; align-items: center; gap: 12px; }
+
+/* Bouton Login — classe obligatoire */
+.login-button {
+    background-color: var(--orange);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 9px 22px;
+    border-radius: var(--radius-btn);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.login-button:hover {
+    background-color: var(--orange-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(247,169,45,0.4);
+}
+
+/* Bouton Logout — visuellement différent */
+.logout-button {
+    background-color: transparent;
+    color: var(--orange);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: var(--radius-btn);
+    border: 2px solid var(--orange);
+    cursor: pointer;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.logout-button:hover { background-color: var(--orange); color: var(--dark); }
+
+/* Greeting connecté */
+.user-greeting {
+    color: rgba(255,255,255,0.65);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ===== MAIN ===== */
+main {
+    flex: 1;
+    padding: 40px 40px 60px;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 100%);
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    margin-top: auto;
+}
+
+/* ===== PAGE TITLES ===== */
+.page-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+.page-subtitle {
+    text-align: center;
+    color: var(--gray-text);
+    font-size: 1rem;
+    margin-bottom: 36px;
+}
+
+/* ===== INDEX — FILTRE PRIX ===== */
+#filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    background: white;
+    padding: 14px 28px;
+    border-radius: 50px;
+    box-shadow: var(--card-shadow);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+#filter label {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--dark);
+    white-space: nowrap;
+}
+#price-filter {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--gray-mid);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    background: white;
+    cursor: pointer;
+    outline: none;
+    transition: border-color var(--transition);
+    min-width: 100px;
+}
+#price-filter:focus { border-color: var(--orange); }
+
+/* ===== INDEX — GRILLE PLACES ===== */
+#places-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Carte place — classe obligatoire
+   Paramètres fixes respectés : margin:20px padding:10px border:1px solid #ddd border-radius:10px */
+.place-card {
+    background: white;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: pointer;
+}
+.place-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--card-hover);
+    border-color: var(--orange);
+}
+.place-card h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin: 12px 8px 6px;
+    line-height: 1.3;
+}
+.place-card .price-tag {
+    display: inline-block;
+    background: var(--orange-light);
+    color: var(--orange-dark);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin: 0 8px 14px;
+}
+
+/* Bouton View Details — classe obligatoire */
+.details-button {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 10px 0;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin: auto 8px 8px;
+    transition: all var(--transition);
+    margin-top: auto;
+}
+.details-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(247,169,45,0.4);
+}
+
+.no-places-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--gray-text);
+    font-size: 1.1rem;
+}
+
+/* ===== PAGE LOGIN ===== */
+.login-wrapper {
+    min-height: calc(100vh - 130px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+#login-form {
+    background: white;
+    padding: 48px 40px;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid var(--gray-mid);
+}
+#login-form h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 8px;
+}
+.form-subtitle {
+    text-align: center;
+    color: var(--gray-text);
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+.form-group { margin-bottom: 20px; }
+.form-group label {
+    display: block;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--dark);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--gray-mid);
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    color: var(--dark);
+    background: var(--gray-light);
+    outline: none;
+    transition: border-color var(--transition), background var(--transition);
+}
+.form-group input:focus { border-color: var(--orange); background: white; }
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    border: none;
+    border-radius: var(--radius-btn);
+    cursor: pointer;
+    transition: all var(--transition);
+    margin-top: 8px;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(247,169,45,0.4); }
+.error-message {
+    background: #FEE2E2;
+    color: #DC2626;
+    border: 1px solid #FCA5A5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: none;
+}
+
+/* ===== PAGE PLACE DETAILS ===== */
+#place-details h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+}
+
+/* Classe obligatoire : place-details */
+.place-details { margin-bottom: 40px; }
+
+/* Classe obligatoire : place-info */
+.place-info {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    /* enrichissements */
+    padding: 32px;
+    box-shadow: var(--card-shadow);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.place-info-item { display: flex; flex-direction: column; gap: 4px; }
+.place-info-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-text);
+}
+.place-info-value { font-size: 1.05rem; font-weight: 700; color: var(--dark); }
+.place-info-value.price { color: var(--orange-dark); font-size: 1.3rem; }
+.amenities-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.amenity-tag {
+    background: var(--orange-light);
+    color: var(--orange-dark);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* Reviews */
+#reviews { margin-bottom: 40px; }
+#reviews h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 20px;
+}
+
+/* Carte review — classe obligatoire
+   Paramètres fixes : margin:20px padding:10px border:1px solid #ddd border-radius:10px */
+.review-card {
+    background: white;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    /* enrichissements */
+    padding: 20px 24px;
+    box-shadow: var(--card-shadow);
+    margin: 0 0 16px 0;
+    transition: box-shadow var(--transition);
+}
+.review-card:hover { box-shadow: var(--card-hover); }
+.review-card .reviewer-name { font-weight: 800; font-size: 1rem; color: var(--dark); margin-bottom: 6px; }
+.review-card .review-text { color: var(--gray-text); font-size: 0.95rem; margin-bottom: 10px; }
+.stars { color: var(--orange); font-size: 1.1rem; letter-spacing: 2px; }
+
+/* Section add-review — classe obligatoire */
+#add-review {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    /* enrichissements */
+    padding: 32px;
+    box-shadow: var(--card-shadow);
+    margin-top: 40px;
+}
+#add-review h2 { font-size: 1.4rem; font-weight: 800; color: var(--dark); margin-bottom: 24px; }
+
+/* Classe obligatoire : form (dans add-review) */
+#add-review .form label,
+#review-form label {
+    display: block;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--dark);
+    margin-bottom: 6px;
+}
+#add-review .form textarea,
+#add-review .form select,
+#review-form textarea,
+#review-form select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--gray-mid);
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    color: var(--dark);
+    background: var(--gray-light);
+    margin-bottom: 18px;
+    outline: none;
+    resize: vertical;
+    transition: border-color var(--transition);
+}
+#add-review .form textarea:focus,
+#review-form textarea:focus,
+#review-form select:focus { border-color: var(--orange); background: white; }
+#add-review .form button,
+#review-form button[type="submit"] {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: var(--radius-btn);
+    cursor: pointer;
+    transition: all var(--transition);
+}
+#add-review .form button:hover,
+#review-form button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(247,169,45,0.4);
+}
+
+/* ===== PAGE ADD_REVIEW SEULE ===== */
+.review-page-wrapper { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
+#review-form {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--gray-mid);
+    box-shadow: var(--card-shadow);
+}
+#review-form h1 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-text);
+    text-align: center;
+    margin-bottom: 4px;
+}
+#review-form h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+/* ===== TOAST NOTIFICATION ===== */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--dark);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+}
+.toast.toast-success { border-left: 4px solid #22C55E; }
+.toast.toast-error { border-left: 4px solid #EF4444; }
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ===== SPINNER CHARGEMENT ===== */
+.loading-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px;
+    color: var(--gray-text);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    header { padding: 0 20px; }
+    main { padding: 24px 16px 40px; }
+    #places-list { grid-template-columns: 1fr; gap: 0; }
+    .place-card { margin: 0 0 16px 0; }
+    .place-info { grid-template-columns: 1fr; }
+    #login-form { padding: 32px 24px; }
+    .page-title { font-size: 1.6rem; }
+    .toast { left: 16px; right: 16px; bottom: 16px; }
+}
