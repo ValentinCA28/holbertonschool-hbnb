@@ -1,21 +1,50 @@
 -- =============================================================
--- HBnB — Données de démonstration : 6 places avec reviews
+-- HBnB — Données initiales complètes
 -- =============================================================
--- À exécuter APRÈS schema.sql ET initial_data.sql
+-- Ce fichier remplace initial_data.sql + seed_demo.sql.
+-- Toutes les insertions utilisent INSERT OR IGNORE :
+--   → sûr à exécuter plusieurs fois sans écraser les données.
 --
--- Commande :
---   sqlite3 instance/development.db < seed_demo.sql
+-- À exécuter APRÈS schema.sql :
+--   sqlite3 instance/development.db < initial_data.sql
 --
--- Utilisateurs créés (mot de passe : pass1234) :
---   sara@test.com   / pass1234
---   marc@test.com   / pass1234
---   lea@test.com    / pass1234
+-- Comptes disponibles :
+--   admin@hbnb.io  / admin1234  (admin)
+--   sara@test.com  / pass1234   (propriétaire place001, place002, place007)
+--   marc@test.com  / pass1234   (propriétaire place003, place004, place008)
+--   lea@test.com   / pass1234   (propriétaire place005, place006, place009)
 -- =============================================================
 
 PRAGMA foreign_keys = ON;
 
 -- =============================================================
--- UTILISATEURS DE TEST
+-- 1. ADMINISTRATEUR
+--    UUID fixe imposé par les tasks et les tests automatisés.
+--    Mot de passe : admin1234
+-- =============================================================
+
+INSERT OR IGNORE INTO users (id, first_name, last_name, email, password, is_admin, created_at, updated_at)
+VALUES (
+    '36c9050e-ddd3-4c3b-9731-9f487208bbc1',
+    'Admin', 'HBnB', 'admin@hbnb.io',
+    '$2b$12$Uu5fTvVL036i9kQnGeAeNOlb5JAvFCFMDKuHfcycD/fpzVtjx7dty',
+    TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+);
+
+-- =============================================================
+-- 2. AMENITIES DE BASE
+--    UUIDs fixes requis par les tests.
+-- =============================================================
+
+INSERT OR IGNORE INTO amenities (id, name, created_at, updated_at) VALUES
+('7c9fdf4d-99be-4b1c-8c2e-5aea5db0d0eb', 'WiFi',             CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('ae5ae8a5-0203-451b-9cb8-6086e5b2f41e', 'Swimming Pool',     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('97bc1cc5-3dcd-439e-894f-e9986dedd012', 'Air Conditioning',  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- =============================================================
+-- 3. UTILISATEURS DE DÉMO
+--    Mot de passe commun : pass1234
+--    Hash bcrypt : $2b$12$Z24N6SlkS8E6YEjB5weWseNPC8oPALbIfEIjM/AanPP9JuheGsZFq
 -- =============================================================
 
 INSERT OR IGNORE INTO users (id, first_name, last_name, email, password, is_admin, created_at, updated_at)
@@ -43,7 +72,7 @@ VALUES (
 );
 
 -- =============================================================
--- 6 PLACES
+-- 4. PLACES DE DÉMO (9 places)
 -- =============================================================
 
 INSERT OR IGNORE INTO places (id, title, description, price, latitude, longitude, owner_id, created_at, updated_at)
@@ -106,12 +135,11 @@ VALUES (
     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 );
 
-
 INSERT OR IGNORE INTO places (id, title, description, price, latitude, longitude, owner_id, created_at, updated_at)
 VALUES (
     'place007-0000-0000-0000-000000000007',
     'Mini studio budget',
-    'Petit studio simple mais propre, idéal pour backpackers.',
+    'Petit studio simple mais propre, idéal pour backpackers et petits budgets.',
     8.00, 46.2100, 6.1500,
     'aaaa1111-0000-0000-0000-000000000001',
     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
@@ -121,7 +149,7 @@ INSERT OR IGNORE INTO places (id, title, description, price, latitude, longitude
 VALUES (
     'place008-0000-0000-0000-000000000008',
     'Chambre étudiante',
-    'Chambre simple dans une colocation calme, proche des transports.',
+    'Chambre simple dans une colocation calme, proche des transports en commun.',
     25.00, 46.2050, 6.1400,
     'bbbb2222-0000-0000-0000-000000000002',
     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
@@ -131,43 +159,44 @@ INSERT OR IGNORE INTO places (id, title, description, price, latitude, longitude
 VALUES (
     'place009-0000-0000-0000-000000000009',
     'Studio compact',
-    'Studio moderne mais très petit, parfait pour courts séjours.',
+    'Studio moderne mais très compact, parfait pour les courts séjours en ville.',
     45.00, 45.7600, 4.8350,
     'cccc3333-0000-0000-0000-000000000003',
     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 );
 
 -- =============================================================
--- AMENITIES LIÉES AUX PLACES
+-- 5. LIENS PLACE ↔ AMENITY
 -- =============================================================
 
--- Chalet (WiFi + Pool + AC)
+-- Chalet : WiFi + Pool + AC
 INSERT OR IGNORE INTO place_amenity VALUES ('place001-0000-0000-0000-000000000001', '7c9fdf4d-99be-4b1c-8c2e-5aea5db0d0eb');
 INSERT OR IGNORE INTO place_amenity VALUES ('place001-0000-0000-0000-000000000001', 'ae5ae8a5-0203-451b-9cb8-6086e5b2f41e');
 INSERT OR IGNORE INTO place_amenity VALUES ('place001-0000-0000-0000-000000000001', '97bc1cc5-3dcd-439e-894f-e9986dedd012');
--- Studio Genève (WiFi + AC)
+-- Studio Genève : WiFi + AC
 INSERT OR IGNORE INTO place_amenity VALUES ('place002-0000-0000-0000-000000000002', '7c9fdf4d-99be-4b1c-8c2e-5aea5db0d0eb');
 INSERT OR IGNORE INTO place_amenity VALUES ('place002-0000-0000-0000-000000000002', '97bc1cc5-3dcd-439e-894f-e9986dedd012');
--- Appartement Annecy (WiFi)
+-- Appartement Annecy : WiFi
 INSERT OR IGNORE INTO place_amenity VALUES ('place003-0000-0000-0000-000000000003', '7c9fdf4d-99be-4b1c-8c2e-5aea5db0d0eb');
--- Maison Chamonix (WiFi + AC)
+-- Maison Chamonix : WiFi + AC
 INSERT OR IGNORE INTO place_amenity VALUES ('place004-0000-0000-0000-000000000004', '7c9fdf4d-99be-4b1c-8c2e-5aea5db0d0eb');
 INSERT OR IGNORE INTO place_amenity VALUES ('place004-0000-0000-0000-000000000004', '97bc1cc5-3dcd-439e-894f-e9986dedd012');
--- Loft Lyon (WiFi)
+-- Loft Lyon : WiFi
 INSERT OR IGNORE INTO place_amenity VALUES ('place005-0000-0000-0000-000000000005', '7c9fdf4d-99be-4b1c-8c2e-5aea5db0d0eb');
--- Villa Provence (Pool + AC)
+-- Villa Provence : Pool + AC
 INSERT OR IGNORE INTO place_amenity VALUES ('place006-0000-0000-0000-000000000006', 'ae5ae8a5-0203-451b-9cb8-6086e5b2f41e');
 INSERT OR IGNORE INTO place_amenity VALUES ('place006-0000-0000-0000-000000000006', '97bc1cc5-3dcd-439e-894f-e9986dedd012');
 
 -- =============================================================
--- REVIEWS
+-- 6. REVIEWS DE DÉMO
 -- =============================================================
 
 INSERT OR IGNORE INTO reviews (id, text, rating, user_id, place_id, created_at, updated_at)
 VALUES (
     'rev00001-0000-0000-0000-000000000001',
     'Endroit absolument magnifique ! La vue sur le lac au lever du soleil est inoubliable. Nous reviendrons sans hésiter.',
-    5, 'bbbb2222-0000-0000-0000-000000000002',
+    5,
+    'bbbb2222-0000-0000-0000-000000000002',
     'place001-0000-0000-0000-000000000001',
     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 );
@@ -176,7 +205,8 @@ INSERT OR IGNORE INTO reviews (id, text, rating, user_id, place_id, created_at, 
 VALUES (
     'rev00002-0000-0000-0000-000000000002',
     'Très bon emplacement, studio propre et bien équipé. Le quartier est dynamique et sécurisé.',
-    4, 'cccc3333-0000-0000-0000-000000000003',
+    4,
+    'cccc3333-0000-0000-0000-000000000003',
     'place002-0000-0000-0000-000000000002',
     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 );
@@ -185,17 +215,8 @@ INSERT OR IGNORE INTO reviews (id, text, rating, user_id, place_id, created_at, 
 VALUES (
     'rev00003-0000-0000-0000-000000000003',
     'Un vrai coup de cœur ! Annecy est superbe et l''appartement correspond exactement aux photos.',
-    5, 'aaaa1111-0000-0000-0000-000000000001',
+    5,
+    'aaaa1111-0000-0000-0000-000000000001',
     'place003-0000-0000-0000-000000000003',
     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 );
-
--- =============================================================
--- RÉSUMÉ
--- =============================================================
--- Comptes de test (mot de passe : pass1234) :
---   sara@test.com  — propriétaire place001, place002
---   marc@test.com  — propriétaire place003, place004
---   lea@test.com   — propriétaire place005, place006
--- Admin : admin@hbnb.io / admin1234
--- =============================================================
