@@ -45,9 +45,9 @@ def create_app(config_class="config.DevelopmentConfig"):
     app = Flask(__name__)
 
     app.config.from_object(config_class)
+    print(">>> USING DATABASE:", app.config["SQLALCHEMY_DATABASE_URI"])
 
     CORS(app)
-
     bcrypt.init_app(app)
     jwt.init_app(app)
     db.init_app(app)
@@ -56,21 +56,9 @@ def create_app(config_class="config.DevelopmentConfig"):
         db.create_all()
 
     from app.services import facade
-    facade.reset()
-
-    # En mode test, les tests créent eux-mêmes l'admin pour une DB propre
-    # En mode dev/prod, on seed l'admin automatiquement
-    if not app.config.get('TESTING'):
-        try:
-            facade.create_user({
-                'first_name': 'Admin',
-                'last_name': 'HBnB',
-                'email': 'admin@hbnb.io',
-                'password': 'admin1234',
-                'is_admin': True
-            })
-        except Exception:
-            pass
+    # Reset uniquement en mode Test
+    if app.config.get('TESTING'):
+        facade.reset()
 
     # Register API Blueprint
     app.register_blueprint(api_bp)
