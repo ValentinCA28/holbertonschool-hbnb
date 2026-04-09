@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB &#8212; Add a Place</title>
+    <meta name="description" content="List your place on HBnB and welcome guests from around the world.">
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ==================================================
+        HEADER
+        Classes obligatoires : .logo  .login-button
+    =================================================== -->
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="header-logo-link">
+                <img src="images/logo.png" alt="HBnB Logo" class="logo">
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">&#127968; Home</a>
+                <a href="index.html#search-section" class="nav-link">&#128269; Search</a>
+                <a href="index.html#places-list" class="nav-link">&#128205; Places</a>
+                <!-- Lien actif sur cette page -->
+                <a href="add_place.html" class="nav-link active nav-add-place" id="add-place-link" aria-current="page">&#43; Add Place</a>
+            </nav>
+
+            <nav class="header-auth" aria-label="Authentication">
+                <a href="login.html" class="login-button" id="login-link">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ==================================================
+        MAIN - Formulaire d'ajout de place
+    =================================================== -->
+    <main>
+        <div class="add-place-wrapper">
+
+            <div class="add-place-header">
+                <h1>&#127968; List Your Place</h1>
+                <p class="add-place-subtitle">Share your space and welcome guests from around the world.</p>
+            </div>
+
+            <!--
+                FORMULAIRE D'AJOUT DE PLACE
+                id="add-place-form" -> intercepté par scripts.js
+                Auth obligatoire : JS redirige vers login.html si pas connecté
+            -->
+            <form id="add-place-form" novalidate>
+
+                <!-- ── Informations générales ────────────────────── -->
+                <fieldset class="form-section">
+                    <legend>General Information</legend>
+
+                    <div class="form-group">
+                        <label for="place-title">Title <span class="required-star" aria-hidden="true">*</span></label>
+                        <input
+                            type="text"
+                            id="place-title"
+                            name="title"
+                            required
+                            maxlength="100"
+                            placeholder="e.g. Cozy apartment in the heart of Paris"
+                            aria-required="true"
+                        >
+                        <span class="field-hint">Max 100 characters</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="place-description">Description</label>
+                        <textarea
+                            id="place-description"
+                            name="description"
+                            rows="5"
+                            placeholder="Describe your place: atmosphere, nearby attractions, what makes it special..."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="place-price">Price per night (USD) <span class="required-star" aria-hidden="true">*</span></label>
+                        <div class="input-with-prefix">
+                            <span class="input-prefix">$</span>
+                            <input
+                                type="number"
+                                id="place-price"
+                                name="price"
+                                required
+                                min="1"
+                                step="0.01"
+                                placeholder="0.00"
+                                aria-required="true"
+                            >
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- ── Localisation ───────────────────────────────── -->
+                <fieldset class="form-section">
+                    <legend>Location</legend>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="place-latitude">Latitude <span class="required-star" aria-hidden="true">*</span></label>
+                            <input
+                                type="number"
+                                id="place-latitude"
+                                name="latitude"
+                                required
+                                min="-90"
+                                max="90"
+                                step="any"
+                                placeholder="e.g. 48.8566"
+                                aria-required="true"
+                            >
+                            <span class="field-hint">Between -90 and 90</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="place-longitude">Longitude <span class="required-star" aria-hidden="true">*</span></label>
+                            <input
+                                type="number"
+                                id="place-longitude"
+                                name="longitude"
+                                required
+                                min="-180"
+                                max="180"
+                                step="any"
+                                placeholder="e.g. 2.3522"
+                                aria-required="true"
+                            >
+                            <span class="field-hint">Between -180 and 180</span>
+                        </div>
+                    </div>
+
+                    <p class="field-hint location-tip">
+                        &#128270; Find your coordinates on
+                        <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Google Maps</a>
+                        (right-click on the map &#8594; copy coordinates).
+                    </p>
+                </fieldset>
+
+                <!-- ── Équipements ────────────────────────────────── -->
+                <fieldset class="form-section">
+                    <legend>Amenities</legend>
+                    <p class="field-hint">Select all that apply to your place.</p>
+
+                    <!--
+                        id="amenities-list" : les checkboxes sont générées
+                        dynamiquement par scripts.js depuis GET /api/v1/amenities/
+                    -->
+                    <div id="amenities-list" class="amenities-checkboxes" aria-label="Available amenities" role="group">
+                        <span class="loading-amenities">Loading amenities...</span>
+                    </div>
+                </fieldset>
+
+                <!-- ── Actions ────────────────────────────────────── -->
+                <div class="form-actions">
+                    <a href="index.html" class="btn-cancel">Cancel</a>
+                    <button type="submit" class="btn-primary btn-submit-place">
+                        &#10003; Publish My Place
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <p>&copy; 2026 HBnB Evolution. All rights reserved.</p>
+            <nav class="footer-nav" aria-label="Footer navigation">
+                <a href="index.html">Home</a>
+                <a href="login.html">Login</a>
+            </nav>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="scripts.js"></script>
+</body>
+</html>
