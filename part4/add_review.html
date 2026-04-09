@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBnB — Add a Review</title>
+    <title>HBnB &#8212; Add a Review</title>
     <meta name="description" content="Share your experience by adding a review for a place on HBnB.">
     <link rel="icon" type="image/png" href="images/icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,46 +14,42 @@
 
     <!-- ==================================================
         HEADER
-        Classes obligatoires: .logo .login-button
+        Classes obligatoires : .logo  .login-button
+        BUG CORRIGÉ : "< class=" → "<div class="
+        BUG CORRIGÉ : id="login-link" dupliqué → un seul id
     =================================================== -->
     <header>
-        <div>
-            < class="header-inner">
-                <a href="index.html" class="header-logo-link">
+        <div class="header-inner">
+            <a href="index.html" class="header-logo-link">
                 <img src="images/logo.png" alt="HBnB Logo" class="logo">
-                </a>
+            </a>
 
-                <nav class="main-nav" aria-label="Main Navigation">
-                    <a href="index.html">Home</a>
-                    <a href="index.html#search-section" class="nav-link">Search</a>
-                    <a href="index.html#places-list" class="nav-link">Places</a>
-                </nav>
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">&#127968; Home</a>
+                <a href="index.html#search-section" class="nav-link">&#128269; Search</a>
+                <a href="index.html#places-list" class="nav-link">&#128205; Places</a>
+                <a href="add_place.html" class="nav-link nav-add-place" id="add-place-link" style="display:none">&#43; Add Place</a>
+            </nav>
 
-                <nav class="header-auth" aria-label="Authentication">
-                    <a href="login.html" class="login-button" id="login-link">Login</a>
-                </nav>
-
-                <nav>
-                    <a href="login.html" class="login-button" id="login-link">Login</a>
-                </nav>
+            <nav class="header-auth" aria-label="Authentication">
+                <a href="login.html" class="login-button" id="login-link">Login</a>
+            </nav>
         </div>
     </header>
 
     <!-- ==================================================
-        MAIN CONTENT - Formulaire de review standalone
+        MAIN - Formulaire de review standalone
     =================================================== -->
     <main>
         <div class="review-page-wrapper">
             <!--
                 FORMULAIRE DE REVIEW STANDALONE
-                id="review-form" → intercepté par scripts.js (Task 4)
-
+                id="review-form" -> intercepté par scripts.js (Task 4)
                 Le h1 est rempli dynamiquement par JS :
                 "Reviewing: <nom de la place>"
-                Le h2 reste fixe.
             -->
-            <form id="review-form">
-                <!-- Rempli par JS : "Reviewing: Beautiful Beach House" -->
+            <form id="review-form" novalidate>
+                <!-- Rempli par JS : "Reviewing: Chalet vue sur le lac" -->
                 <h1 id="place-title">Reviewing a Place</h1>
                 <h2>Add a Review</h2>
 
@@ -70,11 +66,11 @@
                 <label for="rating">Rating</label>
                 <select id="rating" name="rating" required aria-required="true">
                     <option value="" disabled selected>Choose a rating</option>
-                    <option value="5">⭐⭐⭐⭐⭐  — Excellent (5/5)</option>
-                    <option value="4">⭐⭐⭐⭐   — Great (4/5)</option>
-                    <option value="3">⭐⭐⭐    — Good (3/5)</option>
-                    <option value="2">⭐⭐     — Fair (2/5)</option>
-                    <option value="1">⭐       — Poor (1/5)</option>
+                    <option value="5">&#11088;&#11088;&#11088;&#11088;&#11088; &#8212; Excellent (5/5)</option>
+                    <option value="4">&#11088;&#11088;&#11088;&#11088; &#8212; Great (4/5)</option>
+                    <option value="3">&#11088;&#11088;&#11088; &#8212; Good (3/5)</option>
+                    <option value="2">&#11088;&#11088; &#8212; Fair (2/5)</option>
+                    <option value="1">&#11088; &#8212; Poor (1/5)</option>
                 </select>
 
                 <button type="submit">Submit Review</button>
@@ -82,13 +78,11 @@
         </div>
     </main>
 
-    <!-- ==================================================
-        FOOTER
-    =================================================== -->
+    <!-- FOOTER -->
     <footer>
         <div class="footer-inner">
-            <p>© 2026 HBnB Evolution. All rights reserved.</p>
-            <nav class="footer-nav" aria-label="Footer Navigation">
+            <p>&copy; 2026 HBnB Evolution. All rights reserved.</p>
+            <nav class="footer-nav" aria-label="Footer navigation">
                 <a href="index.html">Home</a>
                 <a href="login.html">Login</a>
             </nav>
