@@ -1,44 +1,14 @@
 /*
-  styles.css — HBnB Part 4 — Version finale
-  ==========================================
-  Palette : orange #F7A92D, dark #1a1a2e, grays
-  Police  : Nunito (Google Fonts)
+  styles.css — HBnB Part 4
+  =========================
+  Design based on project mockups.
+  Palette: orange #F7A92D, light gray #f4f4f4, white cards
+  Font: system default sans-serif
 
-  CLASSES OBLIGATOIRES (exigées par le correcteur) :
+  REQUIRED CLASSES (checker):
   .logo  .login-button  .place-card  .details-button
   .place-details  .place-info  .review-card  .add-review  .form
-
-  NOUVELLES CLASSES (add_place.html) :
-  .add-place-wrapper  .form-section  .form-row  .amenities-checkboxes
-  .amenity-checkbox-label  .nav-add-place  .btn-cancel  .search-title
 */
-
-/* ================================================================
-   CSS VARIABLES
-   ================================================================ */
-:root {
-    --orange:        #F7A92D;
-    --orange-dark:   #e09318;
-    --orange-light:  #FFF3DC;
-    --orange-glow:   rgba(247, 169, 45, 0.25);
-    --dark:          #1a1a2e;
-    --dark-mid:      #2d2d44;
-    --dark-soft:     #3a3a55;
-    --white:         #FAFAFA;
-    --gray-light:    #f0f0f5;
-    --gray-mid:      #d0d0e0;
-    --gray-text:     #666680;
-    --gray-border:   #e0e0ea;
-    --green:         #22C55E;
-    --red:           #EF4444;
-    --card-shadow:   0 4px 20px rgba(26, 26, 46, 0.10);
-    --card-hover:    0 10px 40px rgba(247, 169, 45, 0.22);
-    --header-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
-    --radius:        16px;
-    --radius-sm:     10px;
-    --radius-btn:    12px;
-    --transition:    0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
 /* ================================================================
    RESET & BASE
@@ -49,16 +19,13 @@
     padding: 0;
 }
 
-html { scroll-behavior: smooth; }
-
 body {
-    font-family: 'Nunito', 'Segoe UI', sans-serif;
-    background-color: var(--gray-light);
-    color: var(--dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-size: 16px;
     line-height: 1.6;
 }
 
@@ -66,390 +33,350 @@ body {
    HEADER
    ================================================================ */
 header {
-    background: linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 100%);
-    box-shadow: var(--header-shadow);
-    position: sticky;
-    top: 0;
-    z-index: 200;
+    background-color: #F7A92D;
+    padding: 0 32px;
 }
 
 .header-inner {
-    max-width: 1280px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 32px;
-    height: 70px;
+    height: 60px;
     display: flex;
     align-items: center;
-    gap: 24px;
+    justify-content: space-between;
 }
 
 .header-logo-link {
     display: inline-flex;
     align-items: center;
-    flex-shrink: 0;
+    gap: 10px;
     text-decoration: none;
 }
 
-/* ─── CLASSE OBLIGATOIRE : .logo ─── */
+/* --- REQUIRED CLASS: .logo --- */
 .logo {
-    height: 40px;
+    height: 36px;
     width: auto;
-    transition: transform var(--transition), opacity var(--transition);
-}
-.logo:hover { transform: scale(1.06); opacity: 0.9; }
-
-/* ── NAVBAR ────────────────────────────────────────────────── */
-.main-nav {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
 }
 
-.nav-link {
-    color: rgba(255, 255, 255, 0.70);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 7px 14px;
-    border-radius: 8px;
-    transition: color var(--transition), background var(--transition);
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-.nav-link:hover,
-.nav-link.active {
-    color: var(--white);
-    background: rgba(255, 255, 255, 0.10);
-}
-.nav-link[aria-current="page"] {
-    color: var(--orange);
-    background: rgba(247, 169, 45, 0.12);
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: white;
 }
 
-/* Lien "Add Place" — style légèrement mis en valeur */
-.nav-add-place {
-    color: var(--orange);
-    border: 1px solid rgba(247, 169, 45, 0.35);
-    background: rgba(247, 169, 45, 0.08);
-}
-.nav-add-place:hover {
-    color: var(--dark);
-    background: var(--orange);
-    border-color: var(--orange);
-}
-
-/* ── AUTH (Login / Logout) ────────────────────────────────── */
-.header-auth {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-/* ─── CLASSE OBLIGATOIRE : .login-button ─── */
+/* --- REQUIRED CLASS: .login-button --- */
 .login-button {
-    background-color: var(--orange);
-    color: var(--dark);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
     text-decoration: none;
-    padding: 9px 22px;
-    border-radius: var(--radius-btn);
+    padding: 8px 20px;
     border: none;
+    background: none;
     cursor: pointer;
-    transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
 }
 .login-button:hover {
-    background-color: var(--orange-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px var(--orange-glow);
+    text-decoration: underline;
 }
 
 .logout-button {
-    background: transparent;
-    color: var(--orange);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
     text-decoration: none;
     padding: 8px 20px;
-    border-radius: var(--radius-btn);
-    border: 2px solid var(--orange);
+    border: none;
+    background: none;
     cursor: pointer;
-    transition: all var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
 }
 .logout-button:hover {
-    background: var(--orange);
-    color: var(--dark);
-    box-shadow: 0 4px 16px var(--orange-glow);
+    text-decoration: underline;
 }
 
-/* ================================================================
-   HERO
-   ================================================================ */
-.hero {
-    background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 50%, #2a1a4e 100%);
-    padding: 72px 32px 64px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+/* Hide nav links - simple design per mockups */
+.main-nav {
+    display: none;
 }
-.hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -20%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(247, 169, 45, 0.12) 0%, transparent 70%);
-    pointer-events: none;
-}
-.hero-content {
-    position: relative;
-    max-width: 720px;
-    margin: 0 auto;
-}
-.hero-badge {
-    display: inline-block;
-    background: rgba(247, 169, 45, 0.15);
-    color: var(--orange);
-    border: 1px solid rgba(247, 169, 45, 0.35);
-    font-size: 13px;
-    font-weight: 700;
-    padding: 5px 14px;
-    border-radius: 50px;
-    margin-bottom: 20px;
-    letter-spacing: 0.3px;
-}
-.hero-title {
-    font-size: clamp(2rem, 5vw, 3.4rem);
-    font-weight: 900;
-    color: var(--white);
-    line-height: 1.15;
-    margin-bottom: 16px;
-    letter-spacing: -1px;
-}
-.hero-accent { color: var(--orange); }
-.hero-desc {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.65);
-    margin-bottom: 40px;
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
-}
-.hero-stats {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-.hero-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 0 28px;
-}
-.hero-stat strong { font-size: 1.8rem; font-weight: 900; color: var(--orange); line-height: 1; }
-.hero-stat span {
-    font-size: 12px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.55);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-}
-.hero-stat-divider { width: 1px; height: 40px; background: rgba(255, 255, 255, 0.15); flex-shrink: 0; }
 
 /* ================================================================
    MAIN
    ================================================================ */
 main {
     flex: 1;
-    max-width: 1280px;
+    max-width: 1200px;
     margin: 0 auto;
     width: 100%;
-    padding: 40px 32px 80px;
+    padding: 40px 32px 60px;
 }
 
 /* ================================================================
-   SECTION SEARCH & FILTERS
+   INDEX PAGE — Available Places
    ================================================================ */
-.search-section { text-align: center; margin-bottom: 40px; }
-
-.search-title,
 .section-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 900;
-    color: var(--dark);
-    margin-bottom: 6px;
-    letter-spacing: -0.5px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 24px;
 }
-.section-subtitle { color: var(--gray-text); font-size: 1rem; margin-bottom: 28px; }
 
 .filters-bar {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    background: white;
-    padding: 16px 28px;
-    border-radius: 50px;
-    box-shadow: var(--card-shadow);
-    width: fit-content;
-    margin: 0 auto;
-    border: 1px solid var(--gray-border);
+    gap: 10px;
+    margin-bottom: 32px;
 }
-.filter-group { display: flex; flex-direction: column; gap: 4px; }
+
 .filter-label {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--gray-text);
+    font-weight: 700;
+    font-size: 15px;
+    color: #333;
 }
-#search-input {
-    padding: 9px 16px;
-    border-radius: 10px;
-    border: 2px solid var(--gray-mid);
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--dark);
-    background: var(--gray-light);
-    outline: none;
-    transition: border-color var(--transition), background var(--transition);
-    min-width: 200px;
-}
-#search-input:focus { border-color: var(--orange); background: white; }
 
 #price-filter {
-    padding: 9px 14px;
-    border-radius: 10px;
-    border: 2px solid var(--gray-mid);
-    font-family: 'Nunito', sans-serif;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     font-size: 14px;
-    font-weight: 700;
-    color: var(--dark);
-    background: var(--gray-light);
+    background: white;
     cursor: pointer;
-    outline: none;
-    transition: border-color var(--transition);
-    min-width: 110px;
 }
-#price-filter:focus { border-color: var(--orange); background: white; }
 
 /* ================================================================
-   GRILLE DES PLACES
+   PLACE CARDS GRID
    ================================================================ */
 #places-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
 
-/* ─── CLASSE OBLIGATOIRE : .place-card ───
-   Paramètres fixes imposés : margin:20px padding:10px border:1px solid #ddd border-radius:10px */
+/* --- REQUIRED CLASS: .place-card --- */
 .place-card {
     background: white;
-    margin: 20px;
-    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: var(--card-shadow);
-    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    padding: 30px 20px;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    cursor: pointer;
-    /* Reset margin pour la grille CSS */
-    margin: 0;
-}
-.place-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--card-hover);
-    border-color: var(--orange);
-}
-.place-card-photo {
-    width: calc(100% + 4px);
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin: -2px -2px 0 -2px;
-    display: block;
-    background-color: var(--gray-mid);
-}
-.place-card-body {
-    padding: 14px 8px 4px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-.place-card h2 {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: var(--dark);
-    margin-bottom: 6px;
-    line-height: 1.3;
-}
-.place-card .price-tag {
-    display: inline-block;
-    background: var(--orange-light);
-    color: var(--orange-dark);
-    font-weight: 800;
-    font-size: 0.88rem;
-    padding: 4px 10px;
-    border-radius: 6px;
-    margin-bottom: 14px;
+    align-items: center;
+    gap: 12px;
 }
 
-/* ─── CLASSE OBLIGATOIRE : .details-button ─── */
-.details-button {
-    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-    color: var(--dark);
-    font-family: 'Nunito', sans-serif;
+.place-card h2 {
+    font-size: 1.2rem;
     font-weight: 800;
+    color: #333;
+    margin: 0;
+}
+
+.place-card .price-tag {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* --- REQUIRED CLASS: .details-button --- */
+.details-button {
+    background-color: #F7A92D;
+    color: white;
+    font-weight: 700;
     font-size: 14px;
     text-decoration: none;
-    padding: 10px 0;
-    border-radius: 8px;
+    padding: 10px 24px;
+    border-radius: 20px;
     border: none;
     cursor: pointer;
-    text-align: center;
-    display: block;
+    display: inline-block;
     margin-top: auto;
-    transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+    transition: background-color 0.2s;
 }
 .details-button:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px var(--orange-glow);
+    background-color: #e09318;
 }
 
 .no-places-msg,
 .loading-msg {
     grid-column: 1 / -1;
     text-align: center;
-    padding: 60px 20px;
-    color: var(--gray-text);
-    font-size: 1.05rem;
-    font-weight: 600;
+    padding: 40px 20px;
+    color: #999;
+    font-size: 1rem;
 }
 
 /* ================================================================
-   PAGE LOGIN
+   PLACE DETAILS PAGE
+   ================================================================ */
+
+/* --- REQUIRED CLASS: .place-details --- */
+.place-details {
+    margin-bottom: 40px;
+}
+
+#place-details h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #333;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* --- REQUIRED CLASS: .place-info --- */
+.place-info {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 30px 40px;
+    text-align: center;
+}
+
+.place-info p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.place-info p strong {
+    font-weight: 800;
+}
+
+.place-info p:last-child {
+    margin-bottom: 0;
+}
+
+/* ================================================================
+   REVIEWS SECTION
+   ================================================================ */
+#reviews {
+    margin-bottom: 40px;
+}
+
+#reviews h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* --- REQUIRED CLASS: .review-card --- */
+.review-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-left: 4px solid #F7A92D;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+}
+
+.review-card .reviewer-name {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.review-card .review-text {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.review-card .stars {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* ================================================================
+   ADD REVIEW SECTION (inline in place.html)
+   ================================================================ */
+
+/* --- REQUIRED CLASS: #add-review --- */
+#add-review {
+    margin-top: 40px;
+}
+
+#add-review h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* --- REQUIRED CLASS: .form --- */
+#add-review .form label,
+#review-form label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+#add-review .form textarea,
+#add-review .form select,
+#review-form textarea,
+#review-form select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 15px;
+    color: #333;
+    background: white;
+    margin-bottom: 20px;
+    outline: none;
+    resize: vertical;
+}
+
+#add-review .form textarea:focus,
+#review-form textarea:focus,
+#review-form select:focus {
+    border-color: #F7A92D;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background-color: #F7A92D;
+    color: white;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.btn-primary:hover {
+    background-color: #e09318;
+}
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ================================================================
+   ADD REVIEW STANDALONE PAGE
+   ================================================================ */
+.review-page-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+#review-form h1 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #333;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+/* ================================================================
+   LOGIN PAGE
    ================================================================ */
 .login-wrapper {
     min-height: calc(100vh - 140px);
@@ -458,463 +385,211 @@ main {
     justify-content: center;
     padding: 40px 20px;
 }
+
 #login-form {
     background: white;
-    padding: 48px 40px;
-    border-radius: 24px;
-    box-shadow: var(--card-shadow);
+    padding: 40px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
     width: 100%;
-    max-width: 440px;
-    border: 1px solid var(--gray-mid);
+    max-width: 420px;
 }
-.login-logo-wrapper { text-align: center; font-size: 2.5rem; margin-bottom: 16px; }
+
 #login-form h2 {
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 900;
-    color: var(--dark);
-    margin-bottom: 6px;
+    color: #333;
+    margin-bottom: 24px;
 }
-.form-subtitle { text-align: center; color: var(--gray-text); font-size: 14px; margin-bottom: 28px; }
 
-.form-group { margin-bottom: 20px; }
+.form-group {
+    margin-bottom: 18px;
+}
 .form-group label {
     display: block;
-    font-weight: 800;
-    font-size: 11px;
-    color: var(--dark);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #333;
     margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
 }
-.form-group input,
-.form-group textarea,
-.form-group select {
+.form-group input {
     width: 100%;
-    padding: 12px 16px;
-    border: 2px solid var(--gray-mid);
-    border-radius: 10px;
-    font-family: 'Nunito', sans-serif;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
     font-size: 15px;
-    color: var(--dark);
-    background: var(--gray-light);
+    color: #333;
+    background: white;
     outline: none;
-    transition: border-color var(--transition), background var(--transition);
 }
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus { border-color: var(--orange); background: white; }
-
-.btn-primary {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-    color: var(--dark);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 900;
-    font-size: 16px;
-    border: none;
-    border-radius: var(--radius-btn);
-    cursor: pointer;
-    transition: all var(--transition);
-    margin-top: 8px;
+.form-group input:focus {
+    border-color: #F7A92D;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--orange-glow); }
-.btn-primary:disabled { opacity: 0.65; cursor: not-allowed; transform: none; box-shadow: none; }
 
 .error-message {
     background: #FEE2E2;
     color: #DC2626;
     border: 1px solid #FCA5A5;
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 10px 14px;
     font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 20px;
+    font-weight: 600;
+    margin-bottom: 18px;
     display: none;
 }
+
 .login-demo-hint {
     text-align: center;
-    font-size: 12px;
-    color: var(--gray-text);
+    font-size: 13px;
+    color: #888;
     margin-top: 20px;
     line-height: 1.8;
 }
 .login-demo-hint code {
-    background: var(--gray-light);
+    background: #f0f0f0;
     padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-    color: var(--dark);
-    font-weight: 700;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #333;
 }
 
 /* ================================================================
-   BREADCRUMB
-   ================================================================ */
-.breadcrumb { margin-bottom: 24px; }
-.breadcrumb a {
-    color: var(--gray-text);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    transition: color var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-.breadcrumb a:hover { color: var(--orange); }
-
-/* ================================================================
-   PAGE PLACE DETAILS
-   ================================================================ */
-
-/* ─── CLASSE OBLIGATOIRE : .place-details ─── */
-.place-details { margin-bottom: 48px; }
-
-.place-photo {
-    width: 100%;
-    max-height: 420px;
-    object-fit: cover;
-    border-radius: var(--radius);
-    margin-bottom: 28px;
-    box-shadow: var(--card-shadow);
-}
-#place-details h1 {
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--dark);
-    margin-bottom: 24px;
-    letter-spacing: -0.5px;
-}
-
-/* ─── CLASSE OBLIGATOIRE : .place-info ───
-   Paramètres fixes : border:1px solid #ddd border-radius:10px padding:10px */
-.place-info {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    /* enrichissements */
-    padding: 32px 36px;
-    box-shadow: var(--card-shadow);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-}
-.place-info-item { display: flex; flex-direction: column; gap: 4px; }
-.place-info-label {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--gray-text);
-}
-.place-info-value { font-size: 1.05rem; font-weight: 700; color: var(--dark); }
-.place-info-value.price { color: var(--orange-dark); font-size: 1.5rem; font-weight: 900; }
-
-.amenities-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
-.amenity-tag {
-    background: var(--orange-light);
-    color: var(--orange-dark);
-    font-weight: 800;
-    font-size: 13px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid rgba(247, 169, 45, 0.25);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* ================================================================
-   SECTION REVIEWS
-   ================================================================ */
-#reviews { margin-bottom: 48px; }
-#reviews h2 { font-size: 1.6rem; font-weight: 900; color: var(--dark); margin-bottom: 24px; letter-spacing: -0.3px; }
-
-/* ─── CLASSE OBLIGATOIRE : .review-card ───
-   Paramètres fixes : margin:20px padding:10px border:1px solid #ddd border-radius:10px */
-.review-card {
-    background: white;
-    margin: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    /* enrichissements */
-    padding: 22px 26px;
-    margin: 0 0 16px 0;
-    box-shadow: var(--card-shadow);
-    transition: box-shadow var(--transition);
-}
-.review-card:hover { box-shadow: var(--card-hover); }
-.review-card .reviewer-name {
-    font-weight: 900;
-    font-size: 1rem;
-    color: var(--dark);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.reviewer-avatar {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 900;
-    color: var(--dark);
-    flex-shrink: 0;
-}
-.review-card .review-text { color: var(--gray-text); font-size: .95rem; margin-bottom: 12px; line-height: 1.65; }
-.stars { color: var(--orange); font-size: 1.1rem; letter-spacing: 2px; }
-
-/* ================================================================
-   SECTION ADD REVIEW (inline dans place.html)
-   ================================================================ */
-
-/* ─── CLASSE OBLIGATOIRE : #add-review ─── */
-#add-review {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    /* enrichissements */
-    padding: 36px 40px;
-    box-shadow: var(--card-shadow);
-    margin-top: 48px;
-}
-#add-review h2 {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--dark);
-    margin-bottom: 28px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--gray-light);
-}
-
-/* ─── CLASSE OBLIGATOIRE : .form ─── */
-#add-review .form label,
-#review-form label {
-    display: block;
-    font-weight: 800;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-    color: var(--dark);
-    margin-bottom: 7px;
-}
-#add-review .form textarea,
-#add-review .form select,
-#review-form textarea,
-#review-form select {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid var(--gray-mid);
-    border-radius: 10px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 15px;
-    color: var(--dark);
-    background: var(--gray-light);
-    margin-bottom: 20px;
-    outline: none;
-    resize: vertical;
-    transition: border-color var(--transition), background var(--transition);
-}
-#add-review .form textarea:focus,
-#review-form textarea:focus,
-#review-form select:focus { border-color: var(--orange); background: white; }
-
-#add-review .form button,
-#review-form button[type="submit"] {
-    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-    color: var(--dark);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 900;
-    font-size: 15px;
-    padding: 13px 36px;
-    border: none;
-    border-radius: var(--radius-btn);
-    cursor: pointer;
-    transition: all var(--transition);
-}
-#add-review .form button:hover,
-#review-form button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--orange-glow); }
-
-/* ================================================================
-   PAGE ADD_REVIEW STANDALONE
-   ================================================================ */
-.review-page-wrapper { max-width: 620px; margin: 0 auto; padding: 20px 0 60px; }
-#review-form {
-    background: white;
-    padding: 44px 48px;
-    border-radius: 24px;
-    border: 1px solid var(--gray-mid);
-    box-shadow: var(--card-shadow);
-}
-#review-form h1 { font-size: 1rem; font-weight: 700; color: var(--gray-text); text-align: center; margin-bottom: 4px; }
-#review-form h2 { font-size: 1.9rem; font-weight: 900; color: var(--dark); text-align: center; margin-bottom: 36px; letter-spacing: -0.5px; }
-
-/* ================================================================
-   PAGE ADD_PLACE — Formulaire d'ajout de place
+   ADD PLACE PAGE
    ================================================================ */
 .add-place-wrapper {
-    max-width: 760px;
+    max-width: 700px;
     margin: 0 auto;
-    padding: 0 0 60px;
 }
 
 .add-place-header {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 32px;
 }
 .add-place-header h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 900;
-    color: var(--dark);
-    margin-bottom: 8px;
-    letter-spacing: -0.5px;
+    color: #333;
+    margin-bottom: 6px;
 }
-.add-place-subtitle { color: var(--gray-text); font-size: 1rem; }
+.add-place-subtitle {
+    color: #888;
+    font-size: 1rem;
+}
 
-/* Fieldset (section du formulaire) */
 .form-section {
     background: white;
-    border: 1px solid var(--gray-border);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-    margin-bottom: 24px;
-    box-shadow: var(--card-shadow);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
 }
 .form-section legend {
     font-size: 13px;
-    font-weight: 900;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--orange-dark);
+    letter-spacing: 0.8px;
+    color: #F7A92D;
     padding: 0 8px;
-    margin-left: -8px;
 }
 
-/* Labels du formulaire add_place */
-.form-section .form-group { margin-bottom: 20px; }
+.form-section .form-group { margin-bottom: 18px; }
 .form-section .form-group:last-child { margin-bottom: 0; }
 .form-section label {
     display: block;
-    font-weight: 800;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: var(--dark);
-    margin-bottom: 7px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 6px;
 }
 .form-section input[type="text"],
 .form-section input[type="number"],
 .form-section textarea {
     width: 100%;
-    padding: 12px 16px;
-    border: 2px solid var(--gray-mid);
-    border-radius: 10px;
-    font-family: 'Nunito', sans-serif;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
     font-size: 15px;
-    color: var(--dark);
-    background: var(--gray-light);
+    color: #333;
+    background: white;
     outline: none;
-    transition: border-color var(--transition), background var(--transition);
 }
 .form-section input:focus,
-.form-section textarea:focus { border-color: var(--orange); background: white; }
-.form-section textarea { resize: vertical; min-height: 120px; }
+.form-section textarea:focus { border-color: #F7A92D; }
+.form-section textarea { resize: vertical; min-height: 100px; }
 
-/* Champ avec préfixe $ */
 .input-with-prefix {
     display: flex;
     align-items: center;
-    border: 2px solid var(--gray-mid);
-    border-radius: 10px;
-    background: var(--gray-light);
+    border: 1px solid #ccc;
+    border-radius: 6px;
     overflow: hidden;
-    transition: border-color var(--transition);
 }
-.input-with-prefix:focus-within { border-color: var(--orange); background: white; }
+.input-with-prefix:focus-within { border-color: #F7A92D; }
 .input-prefix {
-    padding: 12px 14px;
-    font-weight: 900;
+    padding: 10px 14px;
+    font-weight: 800;
     font-size: 15px;
-    color: var(--orange-dark);
-    background: var(--orange-light);
-    flex-shrink: 0;
+    color: #F7A92D;
+    background: #f9f9f9;
 }
 .input-with-prefix input {
-    width: 100%;
-    padding: 12px 16px;
     border: none;
-    background: transparent;
-    font-family: 'Nunito', sans-serif;
+    padding: 10px 14px;
+    font-family: inherit;
     font-size: 15px;
-    color: var(--dark);
+    color: #333;
     outline: none;
+    width: 100%;
 }
 
-/* Disposition en deux colonnes pour latitude/longitude */
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
 }
 
-/* Astérisque champ obligatoire */
-.required-star { color: var(--red); margin-left: 2px; }
-
-/* Indications contextuelles */
+.required-star { color: #e53e3e; margin-left: 2px; }
 .field-hint {
     display: block;
-    font-size: 11.5px;
-    color: var(--gray-text);
-    margin-top: 5px;
-    font-weight: 600;
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
 }
-.location-tip { margin-top: 12px; font-size: 13px; }
-.location-tip a { color: var(--orange-dark); text-decoration: underline; }
-.location-tip a:hover { color: var(--orange); }
+.location-tip { margin-top: 10px; font-size: 13px; }
+.location-tip a { color: #F7A92D; }
 
-/* Checkboxes amenities */
 .amenities-checkboxes {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 .amenity-checkbox-label {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     cursor: pointer;
     padding: 8px 14px;
     border-radius: 20px;
-    border: 2px solid var(--gray-border);
-    background: var(--gray-light);
-    font-weight: 700;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
     font-size: 13px;
-    color: var(--dark);
-    transition: all var(--transition);
-    user-select: none;
+    color: #333;
+    transition: all 0.2s;
 }
-.amenity-checkbox-label:hover { border-color: var(--orange); background: var(--orange-light); }
-.amenity-checkbox-label input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.amenity-checkbox-label:hover { border-color: #F7A92D; }
+.amenity-checkbox-label input[type="checkbox"] { display: none; }
 .amenity-checkbox-label:has(input:checked) {
-    border-color: var(--orange);
-    background: var(--orange-light);
-    color: var(--orange-dark);
+    border-color: #F7A92D;
+    background: #FFF8E7;
+    color: #d48806;
 }
-.amenity-checkbox-text { display: inline-flex; align-items: center; gap: 5px; }
-.loading-amenities { color: var(--gray-text); font-size: 13px; font-weight: 600; }
+.amenity-checkbox-text { display: inline-flex; align-items: center; gap: 4px; }
+.loading-amenities { color: #888; font-size: 13px; }
 
-/* Boutons d'action du formulaire add_place */
 .form-actions {
     display: flex;
     align-items: center;
@@ -923,29 +598,22 @@ main {
     margin-top: 8px;
 }
 .btn-cancel {
-    padding: 13px 24px;
-    border-radius: var(--radius-btn);
-    border: 2px solid var(--gray-mid);
-    background: transparent;
-    color: var(--gray-text);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: white;
+    color: #666;
+    font-family: inherit;
+    font-weight: 700;
     font-size: 15px;
     text-decoration: none;
-    transition: all var(--transition);
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
 }
-.btn-cancel:hover { border-color: var(--dark); color: var(--dark); }
+.btn-cancel:hover { border-color: #999; color: #333; }
 .btn-submit-place {
     width: auto;
-    padding: 13px 32px;
-    font-size: 15px;
+    padding: 12px 28px;
     margin-top: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
 }
 
 /* ================================================================
@@ -953,90 +621,63 @@ main {
    ================================================================ */
 .toast {
     position: fixed;
-    bottom: 32px;
-    right: 32px;
-    background: var(--dark);
+    bottom: 24px;
+    right: 24px;
+    background: #333;
     color: white;
-    padding: 14px 22px;
-    border-radius: 14px;
-    font-weight: 800;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 700;
     font-size: 14px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     z-index: 1000;
     transform: translateY(80px);
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     pointer-events: none;
-    max-width: 340px;
+    max-width: 320px;
 }
-.toast.toast-success { border-left: 4px solid var(--green); }
-.toast.toast-error   { border-left: 4px solid var(--red); }
+.toast.toast-success { border-left: 4px solid #22c55e; }
+.toast.toast-error   { border-left: 4px solid #ef4444; }
 .toast.show          { transform: translateY(0); opacity: 1; }
 
 /* ================================================================
    FOOTER
    ================================================================ */
 footer {
-    background: linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 100%);
-    color: rgba(255, 255, 255, 0.5);
-    padding: 24px 32px;
+    background-color: #F7A92D;
+    color: white;
+    text-align: center;
+    padding: 20px 32px;
     margin-top: auto;
 }
-.footer-inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
+footer p {
+    font-size: 14px;
+    font-weight: 600;
 }
-.footer-inner p { font-size: 13px; }
-.footer-nav { display: flex; gap: 20px; }
-.footer-nav a { color: rgba(255,255,255,.45); text-decoration: none; font-size: 13px; font-weight: 600; transition: color var(--transition); }
-.footer-nav a:hover { color: var(--orange); }
 
 /* ================================================================
    RESPONSIVE
    ================================================================ */
-@media (max-width: 768px) {
-    .header-inner { padding: 0 16px; gap: 12px; height: 60px; }
-    .main-nav { display: none; }
-
-    .hero { padding: 48px 20px 40px; }
-    .hero-title { font-size: 1.9rem; }
-    .hero-stats { gap: 8px; }
-    .hero-stat { padding: 0 16px; }
-    .hero-stat-divider { display: none; }
-
-    main { padding: 28px 16px 60px; }
-
-    .filters-bar { flex-direction: column; border-radius: 16px; padding: 16px 20px; width: 100%; }
-    #search-input { min-width: 100%; }
-
-    #places-list { grid-template-columns: 1fr; gap: 0; }
-    .place-card { margin: 0 0 20px 0; }
-
-    .place-info { grid-template-columns: 1fr; }
-
-    .form-row { grid-template-columns: 1fr; }
-    .form-section { padding: 20px; }
-    .add-place-wrapper { padding: 0 0 40px; }
-    .form-actions { flex-direction: column-reverse; align-items: stretch; }
-    .btn-cancel { text-align: center; justify-content: center; }
-    .btn-submit-place { width: 100%; justify-content: center; }
-
-    #login-form { padding: 32px 24px; }
-    #review-form { padding: 28px 24px; }
-    #add-review { padding: 24px 20px; }
-
-    .footer-inner { flex-direction: column; text-align: center; gap: 10px; }
-    .toast { left: 16px; right: 16px; bottom: 16px; max-width: none; }
+@media (max-width: 900px) {
+    #places-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-@media (max-width: 480px) {
-    .hero-title { font-size: 1.6rem; }
-    .section-title,
-    .search-title { font-size: 1.5rem; }
-    .add-place-header h1 { font-size: 1.6rem; }
+@media (max-width: 600px) {
+    header { padding: 0 16px; }
+    main { padding: 24px 16px 40px; }
+
+    #places-list {
+        grid-template-columns: 1fr;
+    }
+
+    .place-info { padding: 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-actions { flex-direction: column-reverse; align-items: stretch; }
+    .btn-cancel { text-align: center; }
+    .btn-submit-place { width: 100%; }
+
+    #login-form { padding: 28px 20px; }
 }

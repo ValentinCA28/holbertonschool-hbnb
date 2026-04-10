@@ -3,118 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBnB - Place Details</title>
-    <meta name="description" content="View place details, reviews and add your own review on HBnB.">
-    <link rel="icon" type="image/png" href="images/icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <title>HBnB — Place Details</title>
+    <link rel="icon" href="images/icon.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- ==================================================
-        HEADER
-        Classes obligatoires : .logo  .login-button
-    =================================================== -->
+    <!-- HEADER -->
     <header>
         <div class="header-inner">
             <a href="index.html" class="header-logo-link">
                 <img src="images/logo.png" alt="HBnB Logo" class="logo">
             </a>
-
-            <nav class="main-nav" aria-label="Main navigation">
-                <a href="index.html" class="nav-link">&#127968; Home</a>
-                <a href="index.html#search-section" class="nav-link">&#128269; Search</a>
-                <a href="index.html#places-list" class="nav-link">&#128205; Places</a>
-                <a href="add_place.html" class="nav-link nav-add-place" id="add-place-link" style="display:none">&#43; Add Place</a>
-            </nav>
-
-            <nav class="header-auth" aria-label="Authentication">
-                <a href="login.html" class="login-button" id="login-link">Login</a>
-            </nav>
+            <a href="login.html" id="login-link" class="login-button">Login</a>
         </div>
     </header>
 
-    <!-- ==================================================
-        MAIN
-    =================================================== -->
+    <!-- MAIN -->
     <main>
-
-        <!-- BREADCRUMB - navigation retour -->
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="index.html">&#8592; Back to places</a>
-        </nav>
-
-        <!--
-            SECTION DETAILS DE LA PLACE
-            Classe obligatoire : place-details
-            Remplie dynamiquement par scripts.js.
-            Le JS injecte : photo + h1 + div.place-info
-        -->
-        <section id="place-details" class="place-details" aria-label="Place details">
-            <!-- Injecté par scripts.js -->
+        <!-- Place Details (populated by JS) -->
+        <section id="place-details" class="place-details">
+            <p>Loading place details...</p>
         </section>
 
-        <!--
-            SECTION REVIEWS
-            Remplie dynamiquement par scripts.js.
-            Le JS injecte des div.review-card à l'intérieur.
-        -->
-        <section id="reviews" aria-label="Guest reviews">
-            <!-- Injecté par scripts.js -->
-        </section>
+        <!-- Reviews (populated by JS) -->
+        <section id="reviews"></section>
 
-        <!--
-            SECTION ADD REVIEW - Classe obligatoire : add-review
-            Affichée ou cachée selon l'authentification (gérée par JS).
-            Contient un formulaire avec la classe obligatoire : form
-        -->
-        <section id="add-review" aria-label="Add a review">
+        <!-- Add Review Section (visible only when logged in) -->
+        <section id="add-review" class="add-review" style="display:none">
             <h2>Add a Review</h2>
+            <form id="review-form" class="form">
+                <label for="review-text">Your Review:</label>
+                <textarea id="review-text" name="review-text" rows="4" required></textarea>
 
-            <!--
-                Classe obligatoire : form
-                id="review-form" -> intercepté par scripts.js (Task 3)
-            -->
-            <form id="review-form" class="form" novalidate>
-                <label for="review-text">Your Review</label>
-                <textarea
-                    id="review-text"
-                    name="review-text"
-                    rows="4"
-                    required
-                    placeholder="Share your experience with this place..."
-                    aria-required="true"
-                ></textarea>
-
-                <label for="rating">Rating</label>
-                <select id="rating" name="rating" required aria-required="true">
-                    <option value="" disabled selected>Choose a rating</option>
-                    <option value="5">&#11088;&#11088;&#11088;&#11088;&#11088; - Excellent (5/5)</option>
-                    <option value="4">&#11088;&#11088;&#11088;&#11088; - Great (4/5)</option>
-                    <option value="3">&#11088;&#11088;&#11088; - Good (3/5)</option>
-                    <option value="2">&#11088;&#11088; - Fair (2/5)</option>
-                    <option value="1">&#11088; - Poor (1/5)</option>
+                <label for="rating">Rating:</label>
+                <select id="rating" name="rating" required>
+                    <option value="1">1 Star</option>
+                    <option value="2">2 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="5">5 Stars</option>
                 </select>
 
-                <button type="submit">Submit Review</button>
+                <button type="submit" class="btn-primary">Submit Review</button>
             </form>
         </section>
-
     </main>
 
     <!-- FOOTER -->
     <footer>
-        <div class="footer-inner">
-            <p>&copy; 2026 HBnB Evolution. All rights reserved.</p>
-            <nav class="footer-nav" aria-label="Footer navigation">
-                <a href="index.html">Home</a>
-                <a href="login.html">Login</a>
-            </nav>
-        </div>
+        <p>&copy; 2024 HBnB Evolution. All rights reserved.</p>
     </footer>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div id="toast" class="toast"></div>
     <script src="scripts.js"></script>
 </body>
 </html>

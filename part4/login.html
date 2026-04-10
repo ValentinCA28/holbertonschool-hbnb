@@ -3,109 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBnB - Login</title>
-    <meta name="description" content="Log in to your HBnB account to discover and review amazing places.">
-    <link rel="icon" type="image/png" href="images/icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <title>HBnB — Login</title>
+    <link rel="icon" href="images/icon.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- ==================================================
-        HEADER
-        Classes obligatoires : .logo  .login-button
-    =================================================== -->
+    <!-- HEADER -->
     <header>
         <div class="header-inner">
             <a href="index.html" class="header-logo-link">
                 <img src="images/logo.png" alt="HBnB Logo" class="logo">
             </a>
-
-            <nav class="main-nav" aria-label="Main navigation">
-                <a href="index.html" class="nav-link">&#127968; Home</a>
-                <a href="index.html#search-section" class="nav-link">&#128269; Search</a>
-                <a href="index.html#places-list" class="nav-link">&#128205; Places</a>
-                <a href="add_place.html" class="nav-link nav-add-place" id="add-place-link" style="display:none">&#43; Add Place</a>
-            </nav>
-
-            <!-- Sur la page login, ce lien sera remplacé par JS si déjà connecté -->
-            <nav class="header-auth" aria-label="Authentication">
-                <a href="login.html" class="login-button" id="login-link">Login</a>
-            </nav>
+            <a href="login.html" id="login-link" class="login-button">Login</a>
         </div>
     </header>
 
-    <!-- ==================================================
-        MAIN - Formulaire de connexion
-    =================================================== -->
-    <main>
-        <div class="login-wrapper">
-            <!--
-                FORMULAIRE DE LOGIN
-                id="login-form" -> intercepté par scripts.js (Task 1)
-            -->
-            <form id="login-form" novalidate>
-                <div class="login-logo-wrapper" aria-hidden="true">
-                    <span class="login-icon">&#127968;</span>
-                </div>
+    <!-- LOGIN FORM -->
+    <main class="login-wrapper">
+        <form id="login-form">
+            <h2>Login</h2>
 
-                <h2>Welcome back</h2>
-                <p class="form-subtitle">Log in to your HBnB account</p>
+            <div id="login-error" class="error-message" style="display:none">
+                Invalid email or password. Please try again.
+            </div>
 
-                <!-- Message d'erreur - caché par défaut, affiché par JS si login échoue -->
-                <div class="error-message" id="login-error" role="alert" aria-live="assertive">
-                    Invalid email or password. Please try again.
-                </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        placeholder="your@email.com"
-                        autocomplete="email"
-                        aria-required="true"
-                    >
-                </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Your password" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        required
-                        placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                        autocomplete="current-password"
-                        aria-required="true"
-                    >
-                </div>
+            <button type="submit" class="btn-primary">Login</button>
 
-                <button type="submit" class="btn-primary">Sign In</button>
-
-                <p class="login-demo-hint">
-                    Demo: <code>sara@test.com</code> / <code>pass1234</code><br>
-                    Admin: <code>admin@hbnb.io</code> / <code>admin1234</code>
-                </p>
-            </form>
-        </div>
+            <div class="login-demo-hint">
+                Demo: <code>admin@hbnb.io</code> / <code>admin1234</code>
+            </div>
+        </form>
     </main>
 
     <!-- FOOTER -->
     <footer>
-        <div class="footer-inner">
-            <p>&copy; 2026 HBnB Evolution. All rights reserved.</p>
-            <nav class="footer-nav" aria-label="Footer navigation">
-                <a href="index.html">Home</a>
-                <a href="login.html">Login</a>
-            </nav>
-        </div>
+        <p>&copy; 2024 HBnB Evolution. All rights reserved.</p>
     </footer>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div id="toast" class="toast"></div>
     <script src="scripts.js"></script>
 </body>
 </html>
